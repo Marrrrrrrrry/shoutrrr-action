@@ -12,24 +12,29 @@ on:
     - cron: '17 7 * * 5'
 
 permissions:
+  contents: read
   security-events: write
   actions: read
 
 jobs:
   Anchore-Build-Scan:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag localbuild/testimage:latest
       - name: Run the Anchore scan action itself with GitHub Advanced Security code scanning integration enabled
-        uses: anchore/scan-action@v7
+        uses: anchore/scan-action@e1165082ffb1fe366ebaf02d8526e7c4989ea9d2 # v7
         id: anchore_scan
         with:
           image: "localbuild/testimage:latest"
           fail-build: false
       - name: Upload Anchore Scan Report
-        uses: github/codeql-action/upload-sarif@v4.37.5
+        if: ${{ github.event_name != 'pull_request' || !github.event.pull_request.head.repo.fork }}
+        uses: github/codeql-action/upload-sarif@d1ba80a13dd99fba24a470575428917156a28b43 # v4.37.5
         with:
           sarif_file: ${{ steps.anchore_scan.outputs.sarif }}

@@ -1,5 +1,12 @@
 # Notifications using Shoutrrr in GitHub Actions
 
+[![Build and test](https://github.com/Marrrrrrrrry/shoutrrr-action/actions/workflows/test.yml/badge.svg)](https://github.com/Marrrrrrrrry/shoutrrr-action/actions/workflows/test.yml)
+[![Lint](https://github.com/Marrrrrrrrry/shoutrrr-action/actions/workflows/lint.yml/badge.svg)](https://github.com/Marrrrrrrrry/shoutrrr-action/actions/workflows/lint.yml)
+[![Anchore Container Scan](https://github.com/Marrrrrrrrry/shoutrrr-action/actions/workflows/anchore-analysis.yml/badge.svg)](https://github.com/Marrrrrrrrry/shoutrrr-action/actions/workflows/anchore-analysis.yml)
+
+This is a maintained fork of
+[containrrr/shoutrrr-action](https://github.com/containrrr/shoutrrr-action).
+
 With this action, you can send notifications using
 [Shoutrrr](https://containrrr.dev/shoutrrr) from your GitHub Actions
 workflows.
@@ -20,7 +27,7 @@ jobs:
       - name: Some other steps needed for deploying
         run: ...
       - name: Shoutrrr
-        uses: containrrr/shoutrrr-action@v1
+        uses: Marrrrrrrrry/shoutrrr-action@v1
         with:
           url: ${{ secrets.SHOUTRRR_URL }}
           title: Deployed ${{ github.sha }}

@@ -3,15 +3,50 @@ name: Build and test
 on:
   pull_request:
   push:
+    branches:
+      - main
 
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
       - name: Docker build
         run: |
           docker build .
+
+  integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Send notification via logger service (expects success)
+        uses: ./
+        with:
+          url: 'logger://'
+          title: 'shoutrrr-action CI'
+          message: 'Integration test message'
+      - name: Send notification via invalid URL (expects failure)
+        id: invalid-url
+        uses: ./
+        continue-on-error: true
+        with:
+          url: 'invalid://no-such-service'
+          message: 'This message should never be sent'
+      - name: Assert invalid URL failed as expected
+        if: ${{ steps.invalid-url.outcome != 'failure' }}
+        run: |
+          echo "::error::Expected the action to fail with an invalid URL, but it did not"
+          exit 1

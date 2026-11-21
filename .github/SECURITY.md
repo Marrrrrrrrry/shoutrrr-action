@@ -2,10 +2,14 @@
 
 ## Supported Versions
 
-All versions published [on the marketplace](https://github.com/marketplace/actions/shoutrrr-action) are supported.
+The latest release published in this repository is supported.
 
 ## Reporting a Vulnerability
 
-Security issues can be reported to [Arne Jørgensen](https://github.com/arnested)
-either by [mail](mailto:arne@arnested.dk) or any other channel you prefer and
-trust (see my [Keybase profile](https://keybase.io/arnested)).
+This is a community-maintained fork of
+[containrrr/shoutrrr-action](https://github.com/containrrr/shoutrrr-action).
+
+Security issues should be reported privately via
+[GitHub private vulnerability reporting](https://github.com/Marrrrrrrrry/shoutrrr-action/security/advisories/new)
+on this repository, or to [@Marrrrrrrrry](https://github.com/Marrrrrrrrry)
+by any other channel you trust.

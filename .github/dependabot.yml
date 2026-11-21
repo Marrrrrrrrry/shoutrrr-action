@@ -5,9 +5,9 @@ updates:
     directory: /
     schedule:
       interval: monthly
-      timezone: Europe/Copenhagen
+      timezone: Asia/Hong_Kong
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
-      timezone: Europe/Copenhagen
+      timezone: Asia/Hong_Kong
